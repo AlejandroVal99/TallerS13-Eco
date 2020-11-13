@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactsActivity">
+
+    <Button
+        android:id="@+id/btn_NewContact"
+        android:layout_width="290dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:text="New Contact"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_Number" />
+
+    <EditText
+        android:id="@+id/input_nameC"
+        android:layout_width="290dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Contact Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittulo" />
+
+    <EditText
+        android:id="@+id/input_Number"
+        android:layout_width="290dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Telephone Number"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_nameC" />
+
+    <TextView
+        android:id="@+id/tittulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Schedule"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listContact"
+        android:layout_width="409dp"
+        android:layout_height="350dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_NewContact"
+        app:layout_constraintVertical_bias="0.94" />
+</androidx.constraintlayout.widget.ConstraintLayout>
