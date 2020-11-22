@@ -31,6 +31,7 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        
 
         ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.CALL_PHONE} ,1);
 
