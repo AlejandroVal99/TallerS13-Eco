@@ -4,13 +4,18 @@ import androidx.annotation.NonNull;
 
 public class User {
     public String id;
-    public String username;
-    public User(){
+    public String name, telephone, email, password;
+
+    public User() {
 
     }
-    public User(String id, String username ){
+
+    public User(String id, String name, String telephone, String email, String password) {
         this.id = id;
-        this.username = username;
+        this.name = name;
+        this.telephone = telephone;
+        this.email = email;
+        this.password = password;
     }
 
     public String getId() {
@@ -21,17 +26,35 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return username;
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

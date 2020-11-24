@@ -3,6 +3,7 @@ package com.example.tallers13_eco;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,9 @@ public class ContactsAdapter extends BaseAdapter {
                 (v)->{
                     String userId = viewContact.getUserId();
                     String id =viewContact.getId();
-                    DatabaseReference ref = db.getReference().child("Contacts").child(userId).child(id);
+
+                    Log.e(">>>>>>", id + "   "+userId);
+                    DatabaseReference ref = db.getReference().child("tallers14").child("contacts").child(userId).child(id);
                     ref.setValue(null);
                 }
         );

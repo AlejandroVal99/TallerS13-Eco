@@ -1,88 +1,77 @@
 package com.example.tallers13_eco;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button goContacts;
-    EditText eT_Username;
+    Button btn_SignUp;
+    EditText eT_Password, eT_Email;
     FirebaseDatabase db;
-
+    FirebaseAuth auth;
+    TextView linkRegister;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = FirebaseDatabase.getInstance();
-        goContacts = findViewById(R.id.btn_goContacts);
-        eT_Username = findViewById(R.id.ediT_Username);
 
-        goContacts.setOnClickListener(
+        auth = FirebaseAuth.getInstance();
+        btn_SignUp = findViewById(R.id.btn_SignUp);
+        eT_Password = findViewById(R.id.eT_Password);
+        eT_Email = findViewById(R.id.eT_Email);
+        linkRegister = findViewById(R.id.linkRegister);
+
+
+        btn_SignUp.setOnClickListener(
                 (v) -> {
+                    String email = eT_Email.getText().toString();
+                    String password = eT_Password.getText().toString().trim().toLowerCase();
 
-                    String username = eT_Username.getText().toString().trim().toLowerCase();
+                    boolean inputVer = email.isEmpty() || password.isEmpty();
 
-                    db.getReference().child("Users").orderByChild("username").equalTo(username).addListenerForSingleValueEvent(
-
-                            new ValueEventListener() {
-
-                                public void onDataChange(DataSnapshot data) {
-
-                                    if(data.exists()){
-                                        for(DataSnapshot child: data.getChildren()) {
-                                            User userExist = child.getValue(User.class);
-                                            String oldId = userExist.getId();
-
-                                            Log.e(">>>>>>>", "Existo ");
-                                            Log.e("OldUser", " "+oldId );
-                                            Intent e = new Intent(MainActivity.this, ContactsActivity.class);
-                                            e.putExtra("idUser", oldId);
-                                            startActivity(e);
-                                        }
-                                    }else{
-                                        String newId = db.getReference().child("Users").push().getKey();
-                                        DatabaseReference reference = db.getReference("Users").child(newId);
-                                        User newUser = new User(
-                                                newId,
-                                                username
-                                        );
-                                        reference.setValue(newUser);
-                                        Log.e("NewUser", newUser.getUsername() );
-                                        Intent i = new Intent(MainActivity.this, ContactsActivity.class);
-                                        i.putExtra("idUser", newId);
+                    if(inputVer){
+                        Toast.makeText(this, "Complete all fields", Toast.LENGTH_LONG).show();
+                    }else{
+                        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(
+                                task ->{
+                                    if(task.isSuccessful()){
+                                        Intent i = new Intent(this, ContactsActivity.class);
                                         startActivity(i);
-
+                                        finish();
+                                    }else{
+                                        Toast.makeText(this, task.getException().getMessage(),Toast.LENGTH_LONG).show();
                                     }
-
-
-
-
-                                    Log.e("Usuario que existe", "onDataChange: " );
-
-
                                 }
-                                public void onCancelled(DatabaseError error) {
-                                }
-                            }
-                    );
+                        );
+                    }
+
 
                 }
 
+        );
+
+        linkRegister.setOnClickListener(
+                (v)->{
+
+                    eT_Email.setText("");
+                    eT_Password.setText("");
+                    Intent i = new Intent(this, RegisterActivity.class);
+                    startActivity(i);
+                }
         );
 
     }
@@ -90,15 +79,3 @@ public class MainActivity extends AppCompatActivity {
 
 }
 
-/*  if (userExist == null) {
-                                            Log.e(">>>>>>>", "No existo ");
-
-                                        } else {
-                                            String oldId = userExist.getId();
-
-                                            Log.e(">>>>>>>", "Existo ");
-                                            Log.e("OldUser", " "+oldId );
-                                            Intent e = new Intent(MainActivity.this, ContactsActivity.class);
-                                            e.putExtra("idUser", oldId);
-                                            startActivity(e);
-                                        }*/
